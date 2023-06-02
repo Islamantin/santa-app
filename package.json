@@ -1,0 +1,47 @@
+{
+  "name": "santa-app",
+  "version": "0.0.1",
+  "description": "A simple Node app built on Express, instantly up and running.",
+  "main": "server.js",
+  "scripts": {
+    "dev": "vite --port 3000",
+    "build:client": "esbuild src/index.tsx --bundle --outfile=dist/bundle.js --loader:.js=jsx",
+    "build:server": "esbuild ./server.jsx --bundle --outfile=build/server.js --platform=node",
+    "build": "npm run build:client && npm run build:server",
+    "deploy": "node -r dotenv/config ./build/server.js",
+    "start": "npm run build && npm run deploy"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "dompurify": "^3.0.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "node-cron": "^3.0.2",
+    "nodemailer": "^6.9.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.34",
+    "@types/react-dom": "^18.0.11",
+    "@types/express": "^4.17.17",
+    "@types/dompurify": "^3.0.2",
+    "@vitejs/plugin-react": "^3.1.0",
+    "esbuild": "^0.17.19",
+    "typescript": "^5.0.4",
+    "vite": "^4.2.1"
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "repository": {
+    "url": "https://github.com/alj-devops/santa-app"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch",
+    "express"
+  ]
+}
