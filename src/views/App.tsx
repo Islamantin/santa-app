@@ -16,6 +16,7 @@ export default function App(): JSX.Element {
     }
     setUsernameInput("");
     setWishInput("");
+    // request to API for data to compare
     axios
       .all([
         axios.get(
@@ -31,6 +32,7 @@ export default function App(): JSX.Element {
           const users: User[] = resp2.data;
           const username = dompurify.sanitize(usernameInput);
           const user = users.find((x) => x.username === username);
+          // if input username is contained in API
           if (user) {
             const uid = user.uid;
             const profile = userProfiles.find((x) => x.userUid === uid);
@@ -42,13 +44,16 @@ export default function App(): JSX.Element {
                 setWarning("The user is too old :)");
                 return;
               }
+              // if user younger than age of 10, building data to send it to the server
               const data = {
                 username: username,
                 address: profile.address,
                 wish: dompurify.sanitize(wishInput),
               };
+              // post request with user data
               axios.post("/", data).then((response) => {
-                if (response.data.text?.includes(username)){
+                if (response.data.text?.includes(username)) {
+                  // if server has sent back email contents properly, show "success" message
                   setSuccess(true);
                 }
               });
@@ -93,10 +98,14 @@ export default function App(): JSX.Element {
             <button type="submit" id="submit-letter">
               Send
             </button>
-            {warning && <p className="warning">{warning}</p>}
+            {
+              // if input data would be invalid the respective warning will be shown
+              warning && <p className="warning">{warning}</p>
+            }
           </form>
         </main>
       ) : (
+        // switch to "success" sign
         <div className="success">
           <h2>Complete!</h2>
           <p>Your letter has been successfully sent to Santa</p>
